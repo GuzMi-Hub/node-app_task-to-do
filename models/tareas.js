@@ -18,6 +18,10 @@ class Tareas {
     this._listado = {};
   }
 
+  borrarTarea(id) {
+    delete this._listado[id];
+  }
+
   crearTarea(desc = "") {
     const tarea = new Tarea(desc);
 
@@ -39,6 +43,23 @@ class Tareas {
       const estado = completadoEn ? "Completado".green : "Incompleto".red;
 
       console.log(`${idx}. ${desc} :: ${estado}`);
+    });
+  }
+
+  listarPendientesCompletadas(completadas = true) {
+    let count = 0;
+    let count2 = 0;
+    this.listadoArr.forEach((tarea) => {
+      const { desc, completadoEn } = tarea;
+      const estado = completadoEn ? "Completado".green : "Incompleto".red;
+
+      if (completadas && estado === "Completado".green) {
+        count++;
+        console.log(`${colors.green(count + ".")} ${desc} :: ${completadoEn}`);
+      } else if (!completadas && estado === "Incompleto".red) {
+        count2++;
+        console.log(`${colors.green(count2 + ".")} ${desc} :: ${estado}`);
+      }
     });
   }
 }
